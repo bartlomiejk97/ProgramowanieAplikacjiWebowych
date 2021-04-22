@@ -15,7 +15,7 @@ export class App {
      }
      onSubmit(e :any){
         e.preventDefault();
-        console.log(this.getInputValue());
+        //console.log(this.getInputValue()); // tu wyświelta nazwę z inputa
         this.getCityInfo(this.getInputValue());
      }
 
@@ -34,13 +34,14 @@ export class App {
         const apiUrl : string = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${this.opwApiKey}`;
         const weatherResponse = await fetch(apiUrl);
         const weatherData = await weatherResponse.json();
-        console.log(weatherData);
+        //console.log(weatherData); wyświetla cały obiekt pogody pobrany z inputa
         return weatherData;
     }
 
     saveData(data: any) {
         localStorage.setItem('weatherData', JSON.stringify(data));
-        //console.log(data);
+        //console.log(data);  // wyświetla zapisany obiek w state
+        this.show(this.arrayWeather);
     }
 
     getData() {
@@ -53,9 +54,15 @@ export class App {
 
     }
 
-    show(data:Object){
-        console.log("Cześć");
+    show(arrayWeather : any) : void{
+        let pogoda: any = arrayWeather[0];
+            console.log(pogoda.main);
+            console.log("Cord " + pogoda.cord);
+            console.log("Country " + pogoda.sys.country);
         
-       console.log(data);
+        // coś tu nie działa bo, pobiera to samo miasto i nie wyświetla poprawnie
+        //console.log("Cześć");
+       /*console.log(arrayWeather[0].name,arrayWeather[0].main);
+       console.log();*/
     }
 }
