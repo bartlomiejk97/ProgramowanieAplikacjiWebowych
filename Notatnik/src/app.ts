@@ -1,18 +1,26 @@
-import { arrayWeatherData } from './interface';
+
 export class App {
-    arrayWeather: arrayWeatherData[] = [];
-    opwApiKey = '50d53005c0fd5f556bb4ef15224c4209';
+    
     containerBox: HTMLElement;
     constructor() {
-        this.arrayWeather = this.getData();
+         /*this.arrayWeather = this.getData();
         this.inputsEvents();
         this.containerBox = document.getElementById("weatherBox");
         this.show();
-        localStorage.clear();
-
+        localStorage.clear();*/
+        this.addNewNote();
+    }
+    addNewNote(){
+        const AddNoteButton = document.getElementById('AddNote') as HTMLButtonElement;
+        AddNoteButton.addEventListener('submit',(e) => this.onSubmit(e));
+    }
+    onSubmit(e: any){
+        e = 0;
+        e ++;
+        console.log(e);
     }
 
-    inputsEvents(): void {
+    /*inputsEvents(): void {
         const cityForm = document.getElementById('cityForm');
         const cityButton = document.getElementById('cityButton') as HTMLButtonElement;
         cityForm.addEventListener('submit', (e) => this.onSubmit(e));
@@ -92,5 +100,5 @@ export class App {
         this.saveData(this.arrayWeather);
         this.show();
         //console.log(this.arrayWeather);
-    }
+    }*/
 }
