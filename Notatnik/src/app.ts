@@ -1,8 +1,18 @@
+import { AppStorage } from "./AppStorage";
+
+
+
 export class App {
     noteArray : any= [];
     noteContainer: HTMLElement;
+    appStorage:AppStorage;
+    counter:number= 0;
+    
+
     constructor() {
         this.bindEventAddNewNote();
+        this.appStorage = new AppStorage()
+        
     }
     bindEventAddNewNote() : void {
         const addNoteButton = document.getElementById('addNoteButton') as HTMLButtonElement;
@@ -11,48 +21,108 @@ export class App {
             this.getNoteValue();
         });
     }
-    getNoteValue() : void {
-        
+    getNoteValue() : object {
         const titleNoteValue : HTMLInputElement= document.querySelector('.inputTitle');
         const textAreaValue : HTMLTextAreaElement = document.querySelector('.textArea');
         const textArea = textAreaValue.value;
         const titleNote = titleNoteValue.value;
+        this.counter++;
+
         const newNote : object = {
+            id : this.counter,
             title: titleNote,
-            text: textArea,
+            text: textArea, 
             noteDate:this.getDayNotes()
         }
+        
         this.noteArray.push(newNote);
-        console.log(this.noteArray);
-
-        this.createNewNote(this.noteArray);
+        this.createNewNote(newNote);
+        return newNote;
     }
+
+
     getDayNotes() : string {
         const now : Date = new Date();
         const noteDate : string = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()}`;
         return noteDate;
     }
-    
-    createNewNote(noteArray:any){
-        const renderHere : HTMLElement = document.querySelector('.renderHere');
-        renderHere.innerHTML="";
-        noteArray.forEach((element: any) => {
-            const newNoteContainer : HTMLDivElement = document.createElement('div');
-            newNoteContainer.className="newNotes";
-            const newNoteTop : HTMLDivElement = document.createElement('div');
-            newNoteTop.className="newNoteTop";
-            const newNoteTitle : HTMLDivElement = document.createElement('div');
-            newNoteTitle.className="newNotesTitle";
-            newNoteTitle.innerHTML = element.title;
-            const newNoteArea: HTMLDivElement = document.createElement('div');
-            newNoteArea.className="newNotesArea";
-            newNoteArea.innerHTML = element.text;
-            const newNoteDate : HTMLDivElement = document.createElement('div');
-            newNoteDate.innerHTML=element.noteDate;
-            renderHere.append(newNoteContainer); // kontener na wszystko
-            newNoteContainer.append(newNoteTop,newNoteTitle,newNoteArea);
-        });
+    /////////////////////////////////////////// utworzenie danych notatki 
+
+
+    createDiv():HTMLDivElement{
+        return document.createElement('div');
     }
+    createNewNote(newNote:any){
+            
+            const renderHere : HTMLElement = document.querySelector('.renderHere');
+            const newNoteContainer : HTMLDivElement = this.createDiv();
+            const newNoteTop : HTMLDivElement = this.createDiv();
+            const newNoteTitle : HTMLDivElement = this.createDiv();
+            const newNoteArea: HTMLDivElement = this.createDiv();
+            const newNoteDate : HTMLDivElement = this.createDiv();
+
+            // deklaracje buttonów trzeba stąd wywalić 
+            // pinned
+            const pinnedButton : HTMLButtonElement = document.createElement('button');
+            const pinnedIcon : HTMLImageElement = document.createElement('img');
+                pinnedIcon.src = './media/pinned.png';
+                pinnedButton.id = newNote.id;
+                pinnedButton.addEventListener('click',(event) => {
+                    console.log("Pinned");
+                });
+
+            /// reeemmove
+            const removeButton : HTMLButtonElement = document.createElement('button');
+            const removeIcon : HTMLImageElement = document.createElement('img');
+            removeButton.id = newNote.id;
+            removeIcon.src = './media/remove.png';
+            pinnedButton.addEventListener('click',(event) =>{
+                
+            })
+            // change color 
+            const changeColorButton: HTMLButtonElement = document.createElement('button');
+            const changeColorImg: HTMLImageElement = document.createElement('img');
+            changeColorImg.src='./media/change.png';
+            changeColorButton.id=newNote.id;
+            changeColorButton.addEventListener('click', (event)=>{
+                newNoteArea.style.backgroundColor = `hsl(${Math.random()*360}, 90%, 70%)`;
+            });
+          
+            /// masakra co tu sie dzieje xD
+            newNoteContainer.className="newNotes";
+            newNoteTop.className="newNoteTop";
+            newNoteTitle.className="newNotesTitle";
+            newNoteTitle.innerHTML = newNote.title;
+            newNoteArea.className="newNotesArea";
+            newNoteArea.innerHTML = newNote.text;
+            newNoteDate.className= "newNotesDate";
+            newNoteDate.innerHTML= newNote.noteDate;
+
+
+            renderHere.append(newNoteContainer); // kontener na wszystko
+            newNoteContainer.append(newNoteTop,newNoteTitle,newNoteArea,newNoteDate,);
+            newNoteTop.append(pinnedButton,removeButton,changeColorButton);
+            pinnedButton.append(pinnedIcon);
+            removeButton.append(removeIcon);
+            changeColorButton.append(changeColorImg);
+
+           
+           
+            
+    }
+    
+
+    // pinned(){
+    //      this.getNoteArray(this.noteArray);
+    // }
+
+   
+    // getNoteArray(noteArray:any){
+    //     this.appStorage.savaData(noteArray);
+        
+    // }
+   
+    
 }
 
 
