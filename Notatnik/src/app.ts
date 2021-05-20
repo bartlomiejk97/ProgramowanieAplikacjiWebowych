@@ -35,7 +35,7 @@ export class App {
             noteDate:this.getDayNotes()
         }
         
-        this.noteArray.push(newNote);
+        
         this.createNewNote(newNote);
         return newNote;
     }
@@ -53,7 +53,6 @@ export class App {
         return document.createElement('div');
     }
     createNewNote(newNote:any){
-            
             const renderHere : HTMLElement = document.querySelector('.renderHere');
             const newNoteContainer : HTMLDivElement = this.createDiv();
             const newNoteTop : HTMLDivElement = this.createDiv();
@@ -69,6 +68,7 @@ export class App {
                 pinnedButton.id = newNote.id;
                 pinnedButton.addEventListener('click',(event) => {
                     console.log("Pinned");
+                    this.appStorage.getNoteToSaveData(newNote);
                 });
 
             /// reeemmove
@@ -106,23 +106,10 @@ export class App {
             removeButton.append(removeIcon);
             changeColorButton.append(changeColorImg);
 
-           
-           
-            
+            this.noteArray.push(newNote);
+            console.log(newNote);
+            return newNote;
     }
-    
-
-    // pinned(){
-    //      this.getNoteArray(this.noteArray);
-    // }
-
-   
-    // getNoteArray(noteArray:any){
-    //     this.appStorage.savaData(noteArray);
-        
-    // }
-   
-    
 }
 
 

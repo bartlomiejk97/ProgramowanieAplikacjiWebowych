@@ -1,24 +1,24 @@
 import { App } from "./app";
 export class AppStorage{
-
+    localStorageArray : any = [];
 
     constructor(){
+       
     }
-    // savaData(noteArray:any){
-    //     noteArray.forEach((element:object) => {
-    //         localStorage.setItem('notePinned', JSON.stringify(element));
-    //     });
-    // }
-    // removeDate(notePinned: any){
+    getNoteToSaveData(newNote:any){
+        this.localStorageArray.push(newNote);
+        this.saveData(this.localStorageArray);
+    }
+    saveData(localStorageArray:any){
+        localStorage.setItem('localStorageArray', JSON.stringify(localStorageArray));
+    }
 
-    // }
-    // getData(): any {
-    //     const notePinned = localStorage.getItem('notePinned');
-    //     if (notePinned) return JSON.parse(notePinned);
-    // }
-    // save data 
-    // zapisywac
-    // usuwać z local i html
+
+    // zrobić tablicę, pakować do tej tablicy newNota; // zrobione
+    // zapisać tablice do localStorage // zrobione
+    // pobrać dane z localStorage 
+    // przekazać dane do funkcji która wyświetla.
+    // odpalac tablicę i wyświetlać tak mi sie wydaje
 }
 
 
