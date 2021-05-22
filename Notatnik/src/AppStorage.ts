@@ -1,7 +1,7 @@
-import { App } from "./app";
+import { App } from './App';
 export class AppStorage{
     localStorageArray : any = [];
-
+    App: object;
     constructor(){
        
     }
@@ -13,13 +13,23 @@ export class AppStorage{
         localStorage.setItem('localStorageArray', JSON.stringify(localStorageArray));
     }
 
+    getData(): any {
+        const dataNotes = localStorage.getItem('localStorageArray');
+        if (dataNotes) {
+            console.log(dataNotes);
+            return JSON.parse(dataNotes);
+        } else {
+            return [];
+        }
+    }
+   
+}
 
     // zrobić tablicę, pakować do tej tablicy newNota; // zrobione
     // zapisać tablice do localStorage // zrobione
     // pobrać dane z localStorage 
     // przekazać dane do funkcji która wyświetla.
     // odpalac tablicę i wyświetlać tak mi sie wydaje
-}
 
 
 // dropCity(e: any) {

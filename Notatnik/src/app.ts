@@ -10,9 +10,9 @@ export class App {
     
 
     constructor() {
-        console.log("TEST");
+        
         this.bindEventAddNewNote();
-        this.appStorage = new AppStorage()
+        this.appStorage = new AppStorage();   
         
     }
     bindEventAddNewNote() : void {
@@ -70,6 +70,7 @@ export class App {
                 pinnedButton.addEventListener('click',(event) => {
                     console.log("Pinned");
                     this.appStorage.getNoteToSaveData(newNote);
+                    this.render2Notes(dataNotes);
                 });
 
             /// reeemmove
@@ -77,7 +78,7 @@ export class App {
             const removeIcon : HTMLImageElement = document.createElement('img');
             removeButton.id = newNote.id;
             removeIcon.src = './media/remove.png';
-            pinnedButton.addEventListener('click',(event) =>{
+            removeButton.addEventListener('click',(event) =>{
                 
             })
             // change color 
@@ -111,6 +112,42 @@ export class App {
             console.log(newNote);
             return newNote;
     }
+
+    createNotes(dataNotes :any){
+        const renderList : HTMLElement = document.querySelector('.render-list');
+        const newNoteContainer : HTMLDivElement = this.createDiv();
+        const newNoteTop : HTMLDivElement = this.createDiv();
+        const newNoteTitle : HTMLDivElement = this.createDiv();
+        const newNoteArea: HTMLDivElement = this.createDiv();
+        const newNoteDate : HTMLDivElement = this.createDiv();
+
+        newNoteContainer.className="newNotes";
+        newNoteTop.className="newNoteTop";
+        newNoteTitle.className="newNotesTitle";
+        newNoteTitle.innerHTML = dataNotes.title;
+        newNoteArea.className="newNotesArea";
+        newNoteArea.innerHTML = dataNotes.text;
+        newNoteDate.className= "newNotesDate";
+        newNoteDate.innerHTML= dataNotes.noteDate;
+
+;
+        
+        renderList.append(newNoteContainer); // kontener na wszystko
+        newNoteContainer.append(newNoteTop,newNoteTitle,newNoteArea,newNoteDate,);
+        // deklaracje buttonów trzeba stąd wywalić 
+        
+    }
+
+
+    renderNotes(){
+        const dataNotes:any[]= this.appStorage.getData();
+        console.log(dataNotes);
+        return dataNotes;
+    }
+
+    render2Notes(dataNotes: any){
+        this.createNotes(dataNotes);
+        }
 }
 
 
