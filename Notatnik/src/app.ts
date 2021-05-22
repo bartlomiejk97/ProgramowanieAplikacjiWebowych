@@ -10,6 +10,7 @@ export class App {
     
 
     constructor() {
+        console.log("TEST");
         this.bindEventAddNewNote();
         this.appStorage = new AppStorage()
         
