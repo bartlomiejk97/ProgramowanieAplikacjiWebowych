@@ -22,7 +22,15 @@ export class AppStorage{
             return [];
         }
     }
-   
+    removeNote(e:any){
+      console.log("Delete");
+      const dataRemove: any[] = this.getData();
+9
+      dataRemove.filter((item) => {
+        return item.id.toString() !== e.target.id;
+      })
+
+    }
 }
 
     // zrobić tablicę, pakować do tej tablicy newNota; // zrobione

@@ -68,19 +68,19 @@ export class App {
                 pinnedIcon.src = './media/pinned.png';
                 pinnedButton.id = newNote.id;
                 pinnedButton.addEventListener('click',(event) => {
-                    console.log("Pinned");
+                   // console.log("Pinned");
                     this.appStorage.getNoteToSaveData(newNote);
-                    this.render2Notes(dataNotes);
+                    this.render2Notes(this.appStorage.getData());
                 });
 
-            /// reeemmove
+            /// reeemmove//
             const removeButton : HTMLButtonElement = document.createElement('button');
             const removeIcon : HTMLImageElement = document.createElement('img');
             removeButton.id = newNote.id;
             removeIcon.src = './media/remove.png';
-            removeButton.addEventListener('click',(event) =>{
-                
-            })
+            //removeButton.addEventListener('click',()=> this.appStorage.removeNote());
+           // document.querySelectorAll(`${newNote.id}`)?.forEach((element: any) => element.addEventListener(`click`, (e: any) => this.appStorage.removeNote(e)));
+        
             // change color 
             const changeColorButton: HTMLButtonElement = document.createElement('button');
             const changeColorImg: HTMLImageElement = document.createElement('img');
@@ -109,7 +109,7 @@ export class App {
             changeColorButton.append(changeColorImg);
 
             this.noteArray.push(newNote);
-            console.log(newNote);
+            //console.log(newNote);
             return newNote;
     }
 
@@ -120,7 +120,6 @@ export class App {
         const newNoteTitle : HTMLDivElement = this.createDiv();
         const newNoteArea: HTMLDivElement = this.createDiv();
         const newNoteDate : HTMLDivElement = this.createDiv();
-
         newNoteContainer.className="newNotes";
         newNoteTop.className="newNoteTop";
         newNoteTitle.className="newNotesTitle";
@@ -129,9 +128,6 @@ export class App {
         newNoteArea.innerHTML = dataNotes.text;
         newNoteDate.className= "newNotesDate";
         newNoteDate.innerHTML= dataNotes.noteDate;
-
-;
-        
         renderList.append(newNoteContainer); // kontener na wszystko
         newNoteContainer.append(newNoteTop,newNoteTitle,newNoteArea,newNoteDate,);
         // deklaracje buttonów trzeba stąd wywalić 
@@ -148,6 +144,22 @@ export class App {
     render2Notes(dataNotes: any){
         this.createNotes(dataNotes);
         }
+
+    
+
+
 }
+
+// dropCity(e: any) {
+//     //console.log("before",this.arrayWeather);
+//     this.arrayWeather = this.arrayWeather.filter((item) => {
+//         console.log(item.name, item.id.toString() !== e.target.id);
+//         return item.id.toString() !== e.target.id;
+//     })
+//     // console.log("after",this.arrayWeather);
+
+//     this.saveData(this.arrayWeather);
+//     this.show();
+//     //console.log(this.arrayWeather);
 
 
