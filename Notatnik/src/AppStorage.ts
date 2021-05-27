@@ -1,11 +1,7 @@
 import { App } from './App';
-import { Notes } from './Notes';
 export class AppStorage{
     localStorageArray : any = [];
     app:App;
-    note:Notes;
-    
-
     constructor(){
    
     }

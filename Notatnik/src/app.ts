@@ -1,13 +1,7 @@
 import { AppStorage } from "./AppStorage";
-import { Notes } from "./Notes";
-
-
 
 export class App {
-    notes:Notes;
     appStorage:AppStorage;
-
-
     noteArray : any= [];
     noteContainer: HTMLElement;
     counter:number= 0;
@@ -17,7 +11,6 @@ export class App {
         localStorage.clear();
         this.bindEventAddNewNote();
         this.appStorage = new AppStorage();
-        this.notes = new Notes();
     }
     bindEventAddNewNote() : void {
         const addNoteButton = document.getElementById('addNoteButton') as HTMLButtonElement;
@@ -36,8 +29,10 @@ export class App {
             id : this.counter,
             title: titleNote,
             text: textArea, 
-            noteDate:this.getDayNotes()
+            pinned:false,
+            noteDate:this.getDayNotes(),
         }
+        console.log(newNote);
         return newNote
     }
     getDayNotes() : string {
@@ -61,10 +56,10 @@ export class App {
                 pinnedIcon.src = './media/pinned.png';
                 pinnedButton.id = newNote.id;
                 pinnedButton.addEventListener('click',(event) => {
-                    console.log(newNote.id);
+                    newNote.pinned=true;
                     this.appStorage.getNoteToSaveData(newNote);
-                    this.notes.render2Notes(this.appStorage.getData());
-                    //this.notes.render2Notes(this.appStorage.getData());
+                    this.render2Notes(this.appStorage.getData());
+                    console.log(newNote);
                 });
             const removeButton : HTMLButtonElement = document.createElement('button');
             const removeIcon : HTMLImageElement = document.createElement('img');
@@ -72,7 +67,7 @@ export class App {
                 removeIcon.src = './media/remove.png';
                 removeButton.addEventListener('click',(event:any) =>{
                     this.appStorage.removeNote(event.currentTarget.id);
-                    this.notes.createNotes(this.appStorage.getData());
+                    this.createNotes(this.appStorage.getData());
             });
             const changeColorButton: HTMLButtonElement = document.createElement('button');
             const changeColorImg: HTMLImageElement = document.createElement('img');
@@ -101,4 +96,43 @@ export class App {
             this.noteArray.push(newNote);
             return newNote;
     }
+
+
+
+
+    // renderowanie notatek z localstrage
+    createNotes(dataNotes :any){
+        const renderList : HTMLElement = document.querySelector('.render-list');
+        renderList.innerHTML="";
+        dataNotes.forEach((element:any) => {
+            if(element.pinned == false){
+                
+            }else{
+                console.log(element.pinned == false);
+                const newNoteContainer : HTMLDivElement = this.createDiv();
+                const newNoteTop : HTMLDivElement = this.createDiv();
+                const newNoteTitle : HTMLDivElement = this.createDiv();
+                const newNoteArea: HTMLDivElement = this.createDiv();
+                const newNoteDate : HTMLDivElement = this.createDiv();
+                newNoteContainer.className="newNotes";
+                newNoteTop.className="newNoteTop";
+                newNoteTitle.className="newNotesTitle";
+                newNoteTitle.innerHTML = element.title;
+                newNoteArea.className="newNotesArea";
+                newNoteArea.innerHTML = element.text;
+                newNoteDate.className= "newNotesDate";
+                newNoteDate.innerHTML= element.noteDate;
+                renderList.append(newNoteContainer); 
+                newNoteContainer.append(newNoteTop,newNoteTitle,newNoteArea,newNoteDate,);
+            }
+        });
+    }
+    renderNotes(){
+        const dataNotes:any[]= this.appStorage.getData();
+        return dataNotes;
+    }
+
+    render2Notes(dataNotes: any){
+        this.createNotes(dataNotes);
+        }
 }
